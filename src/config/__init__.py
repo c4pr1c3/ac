@@ -17,6 +17,5 @@ token_expired = float(os.environ.get("TOKEN_EXPIRED", default=600))
 
 storage_path = os.environ.get("STORAGE_PATH", default="storage/")
 
-allowed_file_suffix_list = tuple(os.environ.get("ALLOWED_SUFFIX", default="'jpg', 'jpeg', 'png', 'bmp', 'gif', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'").replace("'", "").replace(" ", "").split(','))
 
 nacl_sk_path = os.environ.get("NACL_SK_PATH", default="config/nacl_sk")

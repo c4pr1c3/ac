@@ -2,46 +2,368 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>文件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="OIP-C.jpg"sizes="16x16">
+    <title>中传放心传</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        color:rgb(255, 255, 255);
+    }
+    html {
+            height: 100%;
+    }
+    body {
+            height: 100%;
+    }
+    .wrap {
+        width:100%;
+        height: 100vh;
+        background: url(img/bg.jpg) center no-repeat;
+        background-size: cover;
+        display: flex;
+        padding-left: 20px;
+    }
+
+    .right{
+        width: 950px;
+        background-color: rgb(231, 202, 222);
+        border-radius: 20px;
+        float: left;
+        margin-left: 30px;
+    }
+
+    .nav {
+        width: 110px;
+        /* margin-right: 998px; */
+        height: 820px;
+        background: #a6c1ee;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: 0.5s;
+    }
+
+    .nav:hover {
+        width: 280px;
+    }
+
+    .btn {
+        width: 60px;
+        height: 10px;
+        display: flex;
+        justify-content: space-around;
+        margin-left: 25px;
+        margin-top: 25px;
+    }
+
+    .btn-item {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    .btn-item:nth-child(1) {
+        background: palevioletred;
+    }
+
+    .btn-item:nth-child(2) {
+        background: beige;
+    }
+
+    .btn-item:nth-child(3) {
+        background: rgb(112, 128, 144);
+    }
+
+    .icon {
+        width: 250px;
+        height: 60px;
+        margin-left: 25px;
+        margin-top: 20px;
+        display: flex;
+    }   
+
+    .icon-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        overflow: hidden;
+    }
+
+    .icon-img img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .icon-con {
+        height: 60px;
+        margin-left: 25px;
+    }
+
+    .icon-con p {
+        padding-top: 5px;
+    }
+
+    .icon-con h4 {
+        font-weight: 300;
+    }
+
+    .line {
+        width: 60px;
+        height: 1px;
+        background: #fff;
+        margin: 20px 25px;
+        transition: 0.5s;
+    }
+
+    .nav:hover .line {
+        width: 230px;
+    }
+
+    .title {
+        width: 60px;
+        margin-left: 25px;
+        margin-bottom: 20px;
+    }
+
+    .title p {
+        font-size: 16px;
+    }
+
+    .item {
+        display: flex;
+        position: relative;
+        transition: 0.5s;
+        border-radius: 6px;
+    }
+
+    .item:hover {
+        background: #f0c4e4;
+    }
+
+    .licon {
+        width: 60px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .con {
+        width: 0px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.5s;
+        overflow: hidden;
+        position: relative;
+        left: -20px;
+        opacity: 0;
+    }
+
+    .nav:hover .con {
+        width: 160px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+    }
+
+    .ricon {
+        width: 0px;
+        height: 50px;
+        transition: 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        opacity: 0;
+    }
+
+    .nav:hover .ricon {
+        width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+    }
+
+    .iconfont {
+        font-size: 26px;
+    }
+
+    .ricon .iconfont {
+        font-size: 20px;
+        color: #62cb44;
+    }
+
+    .light {
+        width: 6px;
+        height: 50px;
+        background: #fbc2eb;
+        position: absolute;
+        left: -25px;
+        transition: 0.5s;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        opacity: 0;
+    }
+
+    .item:hover .light {
+        opacity: 1;
+    }  
+
+    .menu {
+        width: 230px;
+        margin-left: 25px;
+    }
+
+    .nav:hover .serve {
+        width: 230px;
+    }
+    
+    .btn0 {
+            text-align: center;
+            padding: 10px;
+            width: 20%;
+            margin-top: 20px;
+            background:  #a6c1ee;
+            color: #fff;
+            border: 0;
+            border-radius: 15px;
+        }
+
+    </style>
 </head>
 <body>
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
-            <p>{{message}}</p>
-        {% endfor %}
-    {% endwith %}
-    <p>{{username}}，您好！</p>
-    {% if files %}
-        <p>您当前上传了以下文件</p>
-        <ui>
-        {% for file in files %}
-            <li>
-                {{file.filename}}(已加密)
-                {% if file.shared %}
-                (已共享)
-                {% else %}
-                (未共享)
-                {% endif %}
-                <a href="/file/download?filename={{file.filename}}&type=encrypted">下载</a>
-                <a href="/file/download?filename={{file.filename}}&type=hashvalue">下载哈希值</a>
-                <a href="/file/download?filename={{file.filename}}&type=plaintext">解密并下载</a>
-                <a href="/file/download?filename={{file.filename}}&type=signature">下载签名文件</a>
-                <a href="/file/share?filename={{file.filename}}">
-                {% if file.shared %}
-                    取消共享
-                {% else %}
-                    进行共享
-                {% endif %}
-                </a>
-                <a href="/file/remove?filename={{file.filename}}">删除</a>
-            </li>
-        {% endfor %}
-        </ui>
-    {% else %}
-        <p>您当前没有上传任何文件</p>
-    {% endif %}
-    <a href="/file/upload">上传</a>
-    <a href="/shared_file">共享文件</a>
-    <a href="/logout">退出</a>
+
+    <div class="wrap">
+        <div class="nav">
+            <!--按钮-->
+            <div class="btn">
+                <div class="btn-item"></div>
+                <div class="btn-item"></div>
+                <div class="btn-item"></div>
+            </div>
+            <!--头像-->
+            <div class="icon">
+                <div class="icon-img"><img src="/static/img/photo.jpg" alt="" /></div>
+                <div class="icon-con">
+                    <p>中传放心传</p>
+                    <h4>{{username}}</h4>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="title">
+                <p>公开</p>
+            </div>
+            <div class="menu">
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon"><span class="iconfont icon-wenjian"></span></div>
+                    <div class="con"><a href="/shared_file">共享文件</a></div>
+                    <div class="ricon"><span class="iconfont icon-share"></span></div>
+                </div>                
+            </div>
+            <div class="line"></div>
+            <div class="title">
+                <p>个人</p>
+            </div>
+            <div class="menu">
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon"><span class="iconfont icon-mine"></span></div>
+                    <div class="con"><a href="/file">我的文件</a></div>
+                    <div class="ricon">
+                        <span class="iconfont icon-myfile"></span>
+                    </div>
+                </div>                
+            </div>
+            <div class="line"></div>
+            <div class="title">
+                <p>更多</p>
+            </div>
+            <div class="menu">
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon"><span class="iconfont icon-exit"></span></div>
+                    <div class="con"><a href="/logout">退出登录</a></div>
+                    <div class="ricon">
+                        <span class="iconfont icon-logout"></span>
+                    </div>
+                </div>                
+            </div>
+            <div class="line"></div>
+            <div class="title">
+                <p>关于</p>
+            </div>
+            <div class="menu">
+                <div class="item">
+                    <div class="light"></div>
+                    <div class="licon"><span class="iconfont icon-caidan"></span></div>
+                    <div class="con">
+                        <h5>这是由陈锦兰、吴晓晓、钟佳欣、方诗棋完成的中传放心传</h5>
+                    </div>
+                    <div class="ricon">
+                        <span class="iconfont icon-Dashboard"></span>
+                    </div>
+                </div>                
+            </div>
+        </div>    
+        <div class="right">
+            {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endwith %}
+        <p>&nbsp;&nbsp;&nbsp;{{username}}，您好！</p>
+        {% if files %}
+            <p>&nbsp;&nbsp;&nbsp;您当前上传了以下文件</p>
+            <ui>
+            {% for file in files %}
+                <li>
+                    {{file.filename}}(已加密)
+                    {% if file.shared %}
+                    (已共享)
+                    {% else %}
+                    (未共享)
+                    {% endif %}
+                    <button class="btn0" font-family="STSong"><a href="/file/download?filename={{file.filename}}&type=encrypted">下载</a></button>
+
+                    <button class="btn0" font-family="STSong"><a href="/file/download?filename={{file.filename}}&type=hashvalue">下载哈希值</a></button>
+                    
+                    <button class="btn0" font-family="STSong">
+                    <a href="/file/download?filename={{file.filename}}&type=plaintext">解密并下载</a></button>
+
+                    <button class="btn0" font-family="STSong"><a href="/file/download?filename={{file.filename}}&type=signature">下载签名文件</a></button>
+
+                    <button class="btn0" font-family="STSong"><a href="/file/share?filename={{file.filename}}">
+                    {% if file.shared %}
+                        取消共享
+                    {% else %}
+                        进行共享
+                    {% endif %}
+                    </a></button>
+                    <button class="btn0" font-family="STSong"></button><a href="/file/remove?filename={{file.filename}}">删除</a></button>
+                </li>
+            {% endfor %}
+            </ui>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;您当前没有上传任何文件</p>
+        {% endif %}
+            
+        <button class="btn0" font-family="STSong"><a href="/file/upload">上传</a></button>
+        <button class="btn0" font-family="STSong"><a href="/shared_file">共享文件</a></button>
+        <button class="btn0" font-family="STSong"><a href="/logout">退出</a></button>
+            
+            
+        </div>   
+    </div>
 </body>
 </html>
