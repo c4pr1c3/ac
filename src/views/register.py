@@ -3,7 +3,7 @@ import re
 from form import RegisterForm
 
 register = Blueprint('register', __name__)
-username_pattern = re.compile(r'[\u4e00-\u9fa5a-zA-Z0-9]+')
+username_pattern = re.compile(r'[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}$')
 password_pattern = re.compile(r'(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\s\S]{8,36}')
 
 

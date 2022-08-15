@@ -4,6 +4,9 @@ import re
 from database import db
 from config import storage_path
 import secret
+from asyncio import exceptions
+from hashlib import sha512
+import os
 
 filename_pattern = re.compile(r'[^\u4e00-\u9fa5]+')
 
@@ -16,40 +19,53 @@ class File(db.Model):
     shared = Column(Boolean, default=False)
 
     @classmethod
-    def upload_file(cls, user, data):
-        from hashlib import sha512
-        from config import allowed_file_suffix_list
+    def upload_file(cls,user,data):
+        # 判断文件格式是否符合
         filename = data.filename
-        assert len(filename) <= 64, 'filename too long (>64B)'
-        assert filename_pattern.fullmatch(filename), 'no unicode character allowed'
-        filename_suffix = filename.rsplit('.', maxsplit=1)[-1]
-        assert filename_suffix in allowed_file_suffix_list, 'banned file type'
-        f = File.query.filter(and_(File.creator_id == user.id_, File.filename == filename)).first()
-        assert not f, 'file already exists'
+        # file_postfix = filename.split('.')[1]
+        suffix = filename.rfind('.')
+        if suffix == -1:
+            raise exceptions.APIException('图片不正确')
+        file_postfix = filename.name[suffix + 1:]
+        if file_postfix not in ['jpg', 'png', 'gif', 'bmp', 'jpeg', 'JPG', 'PNG','BMP', 'JPEG', 'doc''docx', 'xls', 'xlsx', 'ppt', 'pptx']:
+            raise exceptions.APIException('文件格式不正确')
+
+        #判断文件大小是否大于10MB
         content = data.read()
-        assert len(content) < 1*1024*1024, 'file too large (>=10MB)'
-        user_id = str(user.id_)+'/'
-        if not path.exists(storage_path+user_id):
-            if not path.exists(storage_path):
-                mkdir(storage_path)
+        size = len(content) /1024 /1024
+        assert size < 10, '文件过大'
+
+        #判断文件是否存在
+        file = File.query.filter_by(File.filename == filename).first()
+        assert not file,'文件已经存在'
+
+        #文件添加路径
+        if not os.path.exist(file):
+            user_id = str(user.id_)+'/'
             mkdir(storage_path+user_id)
-        # 计算原文件的哈希
-        hash_value = sha512(content).hexdigest()
-        # 判断文件是否存在
-        if not path.exists(storage_path+user_id+hash_value):
-            # 加密并存储。加密前得先还原出对称密钥。
-            content = secret.symmetric_encrypt(secret.decrypt(user.encrypted_symmetric_key), content)
-            # 同时计算签名
-            signature = secret.sign(content)
-            # 保存密文与签名
+
+            #对用户对称密钥解密
+            user_symmetric_key = secret.decrypt(user.encrypted_symmetric_key)
+            #用系统对称密钥对文件内容加密
+            content = secret.symmetric_encrypt(user_symmetric_key, content)
+
+            #对加密文件签名
+            signature = signature = secret.sign(content)
+
+            #计算文件哈希值
+            hash_value = sha512(content).hexdigest()
+
+            #保存密文和签名
             with open(storage_path+user_id+hash_value, 'wb') as f:
                 f.write(content)
             with open(storage_path+user_id+hash_value+'.sig', 'wb') as f:
                 f.write(signature)
+
         creator_id = user.id_
         file = File(creator_id=creator_id, filename=filename, hash_value=hash_value)
         db.session.add(file)
         db.session.commit()
+        return "上传成功"
 
     @classmethod
     def delete_file(cls, user, filename):
