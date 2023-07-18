@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.7.12
 MAINTAINER c4pr1c3
 
 COPY ./src/requirements.txt /tmp
