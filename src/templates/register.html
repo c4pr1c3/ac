@@ -9,9 +9,9 @@
     <p style="color:red">{{ message }}</p>
     {% endif %}
     <form action="/register/" method="post">
-        <p>{{ form.username(placeholder='用户名') }}</p>
-        <p>{{ form.password }}</p>
-        <p>{{ form.confirm_password}}</p>
+        <p>用户名：{{ form.username(placeholder='可包含中文、英文字母、数字') }}</p>
+        <p>密码：{{ form.password(placeholder='36个字符之内') }}</p>
+        <p>确认密码：{{ form.confirm_password}}</p>
         <p>{{ form.csrf_token }}</p>
 
         <p><input type="submit" value="注册"></p>
