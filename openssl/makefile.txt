@@ -1,0 +1,85 @@
+# 创建干净的测试环境
+# 注意：如果您的日录中已经有证书，则会被删除
+# 请复制到一个新的空日录使用
+clean-all :
+            rm -rf certs csr newcerts pkcs12 private index* serial*
+            mkdir certs
+            mkair csr
+            mkdir newcerts
+            mkdir pkcs12
+            mkdir private
+            echo "1000" > serial
+            touch index.txt
+
+# 生成根密钥
+gen-root-key：
+     openssl genrsa -out private/ca.key.pem 4096
+
+# 生成根证书
+gen-root-certificate:
+            openssl req -config openssl.ini
+        -key private/ca.key.pem
+        -new -x509 -days 7300 -sha256 -extensions v3_ca 
+        -out certs/ca.cert.pem
+
+# 查看根证书
+view-root-certificate:
+    openssl x509-noout -text -in certs/ca.cert.pem
+
+# 生成服务器端密钥
+gen-server-key: 
+    openssl genrsa -out private/localhost.key.pem 2048
+
+# 生成服务器端 CSR 文件
+gen-server-csr:
+            openssl req -contig openssl.1n1
+        -key private/localhost.key.pem
+        -new -sha256
+        -reqexts req_ext
+        -out csr/localhost.csr.pem
+
+# 查看服务器端 CSR 文件
+view-server-csr:
+         openssl req -in csr/localhost.csr.pem -noout -text
+
+# 生成服务器端证书
+gen-server-certificate:
+            openssl ca -config openssl.ini\
+            -extensions server _cert -days 375 -notext -md sha256 \
+            -in csr/localhost.csr.pem
+            -out certs/localhost.cert.pem
+
+# 查看服务器端证书
+view-server-certificate:
+       openssl x5o9 -noout -text -in certslocalnost.cert.pem
+
+# 生成客户端密钥
+gen-client-key:
+       openssl genrsa -out private/client.key.pem 2048
+
+# 生成客户端 CSR 文件
+gen-client-csr:
+            openssl req -config openssl.ini
+            -key private/client.key.pem\
+            -new -sha256
+            -reqexts req_ext
+            -out csr/client.csr.pem
+
+# 生成客户端证书
+gen-client-certificate:
+            openssl ca -config openssl.ini
+            -extensions us_ cert -days 375 -notext -md sha256 \
+            -in csr/client.csr.pem
+            -out certs/client.cert.pem
+
+# 查看客户端证书
+view-client-certificate:
+        openssl x509-noout -text -in certs/client.cert.pem
+
+生成客户端 p12 文件
+gen-client-pkcs12:
+        openssl pkcs12
+            -export -clcerts
+            -in  certs/client.cert.pem
+            -inkey private/client. key. pem
+            -out pkcs12/client.p12
