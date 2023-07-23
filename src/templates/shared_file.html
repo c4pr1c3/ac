@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>共享的文件</title>
+    <link rel="stylesheet" type="text/css" href="../static/ccs/style.css">
 </head>
 <body>
     {% with messages = get_flashed_messages() %}
@@ -11,7 +12,8 @@
         {% endfor %}
     {% endwith %}
     {% if list %}
-        <p>当前有以下共享文件</p>
+    <div class="container">当前有以下共享文件
+        <div class="form-wrapper">
         <ui>
         {% for e in list %}
             <li>
@@ -29,5 +31,11 @@
     {% endif %}
     <a href="/">首页</a>
     <a href="/public_key">获取网站公钥</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+        
 </body>
 </html>

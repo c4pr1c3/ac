@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>上传文件</title>
+    <link rel="stylesheet" type="text/css" href="../static/ccs/style.css">
 </head>
 <body>
-    <form action="/file/upload" method="post" enctype="multipart/form-data">
-        <p>请选择待上传的文件：{{ form.file }}</p>
-        <p>{{ form.csrf_token }}</p>
-        <input type="submit" value="上传">
-    </form>
-    <a href="/logout">退出</a>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">上传文件</div>
+            <div class="form-wrapper">
+                <form action="/file/upload" method="post" enctype="multipart/form-data">
+                    <p>请选择待上传的文件：{{ form.file }}</p>
+                    <br/>
+                    <p>{{ form.csrf_token }}</p>
+                    <input type="submit" value="上传">
+                </form>
+                <a href="/logout">退出</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

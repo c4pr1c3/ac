@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>中传放心传--养心殿</title>
+    <link rel="stylesheet" type="text/css" href="../static/ccs/style.css">
+
 </head>
 <body>
-    {% if message %}
-    <p style="color:red">{{ message }}</p>
-    {% endif %}
-    <form action="/login/" method="post">
-        <p>用户名：{{ form.username(placeholder='用户名') }}</p>
-        <p>密码：{{ form.password(placeholder='密码') }}</p>
-        <p>{{ form.csrf_token }}</p>
-        <p><input type="submit" value="登录"></p>
-    </form>
+    <div class="container">
+        {% if message %}
+        <p style="color:red">{{ message }}</p>
+        {% endif %}
 
-    <a href="/register">注册</a>
-    <a href="/shared_file">共享文件</a>
+        <div class="login-wrapper">
+            <div class="header">登录</div>
+            <div class="form-wrapper">
+
+                <form action="/login/" method="post">
+                    <div type="text" name="username" placeholder="username" class="input-item">
+                        <p>{{ form.username(placeholder='用户名' ,class='button') }}</p>
+                    </div>
+                    <div type="password" name="password" placeholder="password" class="input-item">
+                        <p>{{ form.password(placeholder='密码' ,class='button') }}</p>
+                    </div>
+
+                    <p>{{ form.csrf_token }}</p>
+                    <div class="btn">
+                        <p><input type="submit" value="登录" class="button"></p>
+                    </div>
+                </form>
+
+            </div>
+            <div class="msg">
+                
+                <a href="/register">点击注册</a>
+                <!-- <a href="/reset">忘记密码</a> -->
+                <p></p>
+                直接查看文件：
+                <a href="/shared_file">共享文件</a>
+
+            </div>
+
+        </div>
+    </div>
 </body>
+
 </html>
+
