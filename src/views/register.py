@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect
 import re
+import os
 from form import RegisterForm
 
 register = Blueprint('register', __name__)
@@ -27,6 +28,12 @@ def post__register():
         confirm_password = form.confirm_password.data
         assert password != confirm_password, '两次输入密码不一致！'
         assert password_pattern.fullmatch(password), '密码不合法！'
+        
+        # 生成一个 16 字节的随机字符串作为盐
+        salt = str(os.urandom(16))
+        # 将盐和密码拼接起来，并转换为字节序列
+        password = salt + form.password.data
+        
         hash_password = form.get_hash_password()
         User.create_user(username, hash_password)
         return redirect('/login')
