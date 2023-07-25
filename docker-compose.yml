@@ -22,8 +22,10 @@ services:
       HTTPS_HOST: "0.0.0.0"
       HTTPS_PORT: 443
       IS_DEUBG: "True"
-      SSL_PUB: "cert.pem"
-      SSL_PRIV: "key.pem"
+      #SSL_PUB: "cert.pem"
+      SSL_PUB: "CARoot_crt.pem"
+      #SSL_PRIV: "key.pem"
+      SSL_PRIV: "CARoot_key.pem"
       TOKEN_EXPIRED: 600
       STORAGE_PATH: "storage/"
       ALLOWED_SUFFIX: "'jpg', 'jpeg', 'png', 'bmp', 'gif', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf'"

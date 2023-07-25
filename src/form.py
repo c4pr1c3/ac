@@ -8,7 +8,6 @@ class PasswordForm(FlaskForm):
 
     def get_hash_password(self):
         from hashlib import sha512
-        #返回密码字段输入的字符串经过SHA-512哈希后的字节串（byte string）。
         return sha512(self.password.data.encode()).digest()
 
 
