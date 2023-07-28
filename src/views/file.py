@@ -28,13 +28,17 @@ def post__upload(user):
     try:
         from form import FileForm
         form = FileForm()
+        # FileForm这个类在定义时只定义了一个验证器，即检验文件内容是否为空；
+        # 尝试增加两个验证器，导入_init_中的两个变量来直接限制文件类型和大小，文件类型可以实现，但是大小不能成功限制，故没有采用这个方法。
         assert form.validate_on_submit(), 'invalid form fields'
         data = form.file.data
         File.upload_file(user, data)
         flash('上传成功！')
+        #断言失败，触发错误提示
     except AssertionError as e:
         message = e.args[0] if len(e.args) else str(e)
         flash('上传失败！'+message)
+    # 重定向到网站url/file下
     return redirect('/file')
 
 
