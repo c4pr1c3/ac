@@ -2,9 +2,9 @@
 
 本项目是 [中国传媒大学密码学应用实践课程](https://c4pr1c3.github.io/cuc-wiki/ac.html) 养心殿小组的成果。
 
-仓库链接：https://github.com/ArrebolY/ac-yxd
+仓库链接：[点这里](https://github.com/ArrebolY/ac-yxd)
 
-讲解视频链接：
+讲解视频链接：[点这里](https://www.bilibili.com/video/BV16V411V7NS/?spm_id_from=top_right_bar_window_dynamic.content.click&vd_source=11bedaab6369e0cb458e3a995d5a8d1d)
 
 ## 功能清单
 
@@ -39,6 +39,15 @@
 * 前端使用html、css语言编写，未使用框架
 * 后端使用原生 Python 编写，没有使用任何框架
 * 程序部署运行环境采用 docker
+
+ 本作品中包含的密码学理论与技术示范应用要点说明：
+| 密码学理论 | 技术应用 | 作用 |
+| :---: | :---: | :---: |
+| 密钥管理、数字签名 | 证书配置 | 给网站进行加密的，保护网站数据安全 |
+| sha512+加盐 | 用户口令加密 | 防止明文存储用户口令导致的口令被窃取，抵抗针对sha512的彩虹表攻击 |
+| XSalsa20、Poly1305 | 文件加密 | 保证服务器端存储的是加密文件，防止攻击者直接窃取到明文文件 |
+| SECP256k1椭圆曲线、SHA-1哈希函数的ECDSA算法 | 数字签名 | 提供文件的来源检验，防止攻击者伪造 |
+
 
 ## 快速上手体验
 
@@ -88,9 +97,5 @@ Server: Docker Engine - Community
   Version:          0.19.0
   GitCommit:        de40ad0
 ```
-
-## 演示
-
-[![查看演示视频](ac-demo.png)](https://www.bilibili.com/video/BV1Hb4y1R7FE?p=119)
 
 
