@@ -85,14 +85,15 @@ class File(db.Model):
                 content = f_.read()
                 filename = filename+'.sig'
         else:
-            # 读取密文
             with open(storage_path+str(user.id_)+'/'+hash_value, 'rb') as f_:
                 content = f_.read()
+            # 读取明文
             if type_ == 'plaintext':
                 content = secret.symmetric_decrypt(secret.decrypt(user.encrypted_symmetric_key), content)
+            # 读取密文
             elif type_ == 'encrypted':
                 filename = filename + '.encrypted'
-        #对称密钥
+   
 
         
         response = make_response(content)
