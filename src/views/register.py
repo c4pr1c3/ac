@@ -3,8 +3,10 @@ import re
 from form import RegisterForm
 
 register = Blueprint('register', __name__)
+
 #用户名要求：可包含中英文、数字、合法字符，长度限制2-36字符
-username_pattern = re.compile(r'[\u4e00-\u9fa5a-zA-Z0-9]{2,36}$')
+#username_pattern = re.compile(r'[\u4e00-\u9fa5a-zA-Z0-9]{2,36}$')
+username_pattern = re.compile(r'[\u4e00-\u9fa5a-zA-Z0-9-_ ]+')
 
 #密码要求:必须包含大小写、数字，长度限制8-36字符
 #password_pattern = re.compile(r'(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\s\S]{8,36}')
