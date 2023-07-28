@@ -1,6 +1,10 @@
 # 中传放心传
 
-本项目是 [中国传媒大学密码学应用实践课程](https://c4pr1c3.github.io/cuc-wiki/ac.html) 的一个样例工程。
+本项目是 [中国传媒大学密码学应用实践课程](https://c4pr1c3.github.io/cuc-wiki/ac.html) 养心殿小组的成果。
+
+仓库链接：https://github.com/ArrebolY/ac-yxd
+
+讲解视频链接：
 
 ## 功能清单
 
@@ -14,7 +18,6 @@
   * 使用合法用户名和口令登录系统
   * 禁止使用明文存储用户口令 
     * 存储的口令即使被公开，也无法还原/解码出原始明文口令
-  * 忘记密码
 * 基于网页的文件上传加密与数字签名系统
   * 已完成《基于网页的用户注册与登录系统》所有要求
   * 限制文件大小：小于 10MB
@@ -39,15 +42,19 @@
 
 ## 快速上手体验
 
-本样例工程通过 `docker-compose up -d --build` 方式部署后，打开浏览器访问： [http://yxd.cuc.pan:8080](https://yxd.cuc.pan:8080) 即可快速体验系统所有功能。
+本样例工程通过 `docker-compose up -d --build` 方式部署后，打开浏览器访问： [http://yxd.cuc.pan](https://yxd.cuc.pan) 即可快速体验系统所有功能。
 
 ## 依赖环境安装补充说明
 
 * 确保安装好docker和docker-compose（可利用python的pip命令）
 
-* 配置 `CARoot` 和 `app` 为受信任证书
+* 添加 `CARoot` 和 `app` 为受信任证书，分别为根证书颁发机构和中间证书颁发机构，即可实现三级证书链结构
 
 ![](imgs/add_cert.png)
+
+* 国内特殊网络环境条件下，安装 `docker` 和从 `Docker Hub` 拉取基础镜像可能会无法正常完成，建议使用 **可靠** 镜像源和缓存。推荐：
+    * [安装 docker 主程序指南](http://mirrors.ustc.edu.cn/help/docker-ce.html)
+    * [加速访问 Docker Hub 指南](http://mirrors.ustc.edu.cn/help/dockerhub.html)
 
 
 ## 附录-1：项目测试验证环境信息
@@ -81,14 +88,6 @@ Server: Docker Engine - Community
   Version:          0.19.0
   GitCommit:        de40ad0
 ```
-
-## 依赖环境安装补充说明
-
-* `build.sh` 的执行需要 `root` 权限，普通用户可以 `sudo bash build.sh` ，建议直接切换到 `root` 用户身份的 `shell` 解释器环境执行 `bash build.sh`
-    * 要确保 `docker-compose` 全局安装，可以参考附录里的 `解决 sudo docker-compose 时找不到 docker-compose 的问题`
-* 国内特殊网络环境条件下，安装 `docker` 和从 `Docker Hub` 拉取基础镜像可能会无法正常完成，建议使用 **可靠** 镜像源和缓存。推荐：
-    * [安装 docker 主程序指南](http://mirrors.ustc.edu.cn/help/docker-ce.html)
-    * [加速访问 Docker Hub 指南](http://mirrors.ustc.edu.cn/help/dockerhub.html)
 
 ## 演示
 
