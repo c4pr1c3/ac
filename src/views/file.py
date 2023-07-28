@@ -1,7 +1,10 @@
 from flask import Blueprint, render_template, flash, redirect, request
+from hmac_1 import hamc_encrypt, random_within_7_days, within_7_days
 from models import File
 from common import *
 from flask import current_app as app
+from datetime import date, datetime, timedelta
+
 
 file = Blueprint('file', __name__)
 
@@ -58,6 +61,9 @@ def get__download(user):
     try:
         filename = request.args.get('filename')
         assert filename, 'missing filename'
+        # key = random_within_7_days()
+        # hamc_encrypt(filename, key)
+        # assert hamc_encrypt, 'Exceeded download time' 
         type_ = request.args.get('type')
         assert type_, 'missing type'
         assert type_ in ('encrypted', 'plaintext', 'signature', 'hashvalue'), 'unknown type'
@@ -81,3 +87,10 @@ def get__share(user):
         message = e.args[0] if len(e.args) else str(e)
         flash('设置失败！'+message)
         return redirect('/file')
+    
+# @file.route('/url', summary="上传url预签名")
+# @login_required
+# def presigned_url(query: ObjectQuery):
+#     url = minio_client.presigned_put_object(query.bucket_name, query.object_name, expires=timedelta(days=1))
+#     print(url)
+#     return response(data=url)

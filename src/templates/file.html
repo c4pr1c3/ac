@@ -3,45 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>文件</title>
+    <link rel="stylesheet" type="text/css" href="../static/ccs/style.css">
 </head>
 <body>
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
+    <div class="container">
+        <div class="login-wrapper">
+            {% with messages = get_flashed_messages() %} {% for message in messages %}
             <p>{{message}}</p>
-        {% endfor %}
-    {% endwith %}
-    <p>{{username}}，您好！</p>
-    {% if files %}
-        <p>您当前上传了以下文件</p>
-        <ui>
-        {% for file in files %}
-            <li>
-                {{file.filename}}(已加密)
-                {% if file.shared %}
-                (已共享)
-                {% else %}
-                (未共享)
-                {% endif %}
-                <a href="/file/download?filename={{file.filename}}&type=encrypted">下载</a>
-                <a href="/file/download?filename={{file.filename}}&type=hashvalue">下载哈希值</a>
-                <a href="/file/download?filename={{file.filename}}&type=plaintext">解密并下载</a>
-                <a href="/file/download?filename={{file.filename}}&type=signature">下载签名文件</a>
-                <a href="/file/share?filename={{file.filename}}">
+            {% endfor %} {% endwith %}
+            <div class="header">
+                <p>{{username}}，您好！</p>
+            </div>
+            {% if files %}
+            <p>您当前上传了以下文件</p>
+            <ui>
+                {% for file in files %}
+                <li>
+                    {{file.filename}}(已加密) {% if file.shared %} (已共享) {% else %} (未共享) {% endif %}<br/>
+                    <a href="/file/download?filename={{file.filename}}&type=encrypted">下载</a><br/>
+                    <a href="/file/download?filename={{file.filename}}&type=hashvalue">下载哈希值</a><br/>
+                    <a href="/file/download?filename={{file.filename}}&type=plaintext">解密并下载</a><br/>
+                    <a href="/file/download?filename={{file.filename}}&type=signature">下载签名文件</a><br/>
+                    <a href="/file/download?filename={{file.filename}}&type=symmetric_key">下载对称密钥</a><br/>
+                    <div id="test"></div><br/>
+                    <a href="/file/share?filename={{file.filename}}">
                 {% if file.shared %}
                     取消共享
                 {% else %}
                     进行共享
                 {% endif %}
-                </a>
-                <a href="/file/remove?filename={{file.filename}}">删除</a>
-            </li>
-        {% endfor %}
-        </ui>
-    {% else %}
-        <p>您当前没有上传任何文件</p>
-    {% endif %}
-    <a href="/file/upload">上传</a>
-    <a href="/shared_file">共享文件</a>
-    <a href="/logout">退出</a>
+                </a><br/>
+                    <a href="/file/remove?filename={{file.filename}}">删除</a><br/>
+                </li>
+                {% endfor %}
+            </ui>
+            {% else %}
+            <p>您当前没有上传任何文件</p>
+            {% endif %}
+            <br/><br/><a href="/file/upload">上传</a>
+            <br/><a href="/shared_file">共享文件</a>
+            <br/><a href="/logout">退出</a>
+        </div>
+    </div>
 </body>
 </html>

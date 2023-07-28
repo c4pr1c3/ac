@@ -23,7 +23,7 @@ class User(db.Model):
     def create_user(cls, username, hash_password):
         import secret
         user = User.get_by(username=username)
-        assert user is None, 'email already registered'
+        assert user is None, 'email already registered'#该用户已经被注册过了
         # 先随机生成一个用户的对称密钥与公私钥
         symmetric_key = secret.new_symmetric_key()
         private_key, public_key = secret.new_pair()
@@ -34,4 +34,4 @@ class User(db.Model):
                     encrypted_public_key=secret.encrypt(public_key)
                     )
         db.session.add(user)
-        db.session.commit()
+        db.session.commit()#提交到数据库

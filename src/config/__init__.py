@@ -11,7 +11,7 @@ ssl_cn = os.environ.get("SSL_CN", default="ac-flask-demo.me")
 host = os.environ.get("HTTPS_HOST", default="0.0.0.0")
 port = os.environ.get("HTTPS_PORT", default=443)
 debug = os.environ.get("IS_DEBUG", default=True)
-ssl_context = (os.environ.get("SSL_PUB", default='cert.pem'), os.environ.get("SSL_PRIV", default='key.pem'))
+ssl_context = (os.environ.get("SSL_PUB", default='CARoot_crt.pem'), os.environ.get("SSL_PRIV", default='CARoot_key.pem'))
 
 token_expired = float(os.environ.get("TOKEN_EXPIRED", default=600))
 
